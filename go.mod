@@ -1,3 +1,3 @@
-module xunhupay
+module github.com/dongecs/xunhupay
 
-go 1.17
+go 1.24
