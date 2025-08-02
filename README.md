@@ -5,7 +5,7 @@
 ##### 1.使用go mod命令：
 
 ```shell
-go get github.com/morebuff/xunhupay
+go get github.com/dongecs/xunhupay
 ```
 
 ##### 2.支付调用示例：
