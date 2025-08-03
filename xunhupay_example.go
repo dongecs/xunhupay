@@ -45,7 +45,7 @@ func Query() {
 		//"open_order_id":"123456789",
 	}
 
-	execute, err := client.Execute(host, params) //执行查询操作
+	execute, err := client.ExecuteQuery(host, params) //执行查询操作
 
 	if err != nil {
 		panic(err)
