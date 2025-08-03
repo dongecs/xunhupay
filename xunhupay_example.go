@@ -5,8 +5,8 @@ import "fmt"
 // Pay 支付示例
 func Pay() {
 
-	appId := "xxxxxxxxxxxxxxxxxxx"                        //Appid
-	appSecret := "YYYYYYYYYYYYYYYYYYYYYYY"                //密钥
+	appId := "test_app_id"                        //Appid
+	appSecret := "test_app_secret"                //密钥
 	var host = "https://api.xunhupay.com/payment/do.html" //跳转支付页接口URL
 
 	client := NewHuPi(&appId, &appSecret) //初始化调用
@@ -33,8 +33,8 @@ func Pay() {
 // Query 查询示例
 func Query() {
 
-	appId := "xxxxxxxxxxxxxxxxxxx"                           //Appid
-	appSecret := "YYYYYYYYYYYYYYYYYYYYYYY"                   //密钥
+	appId := "test_app_id"                           //Appid
+	appSecret := "test_app_secret"                   //密钥
 	var host = "https://api.xunhupay.com/payment/query.html" //查询接口URL
 
 	client := NewHuPi(&appId, &appSecret) //初始化调用
@@ -45,7 +45,7 @@ func Query() {
 		//"open_order_id":"123456789",
 	}
 
-	execute, err := client.ExecuteQuery(host, params) //执行查询操作
+	execute, err := client.Execute(host, params) //执行查询操作
 
 	if err != nil {
 		panic(err)

@@ -33,10 +33,24 @@ type Response struct {
 	Errcode   int    `json:"errcode"`
 	Errmsg    string `json:"errmsg"`
 	Hash      string `json:"hash"`
+	Data      Data   `json:"data,omitempty"`
+}
+
+type Data struct {
+	OpenOrderId   string `json:"open_order_id"`
+	TotalAmount   string `json:"total_amount"`
+	Title         string `json:"title"`
+	Status        string `json:"status"`
+	Plugins       string `json:"plugins"`
+	PaymentMethod string `json:"payment_method"`
+	TransactionId string `json:"transaction_id"`
+	PaidDate      string `json:"paid_date"`
+	PayUrl        string `json:"pay_url"`
+	OutTradeOrder string `json:"out_trade_order"`
 }
 
 // Execute 执行请求操作
-func (client *HuPiClient) ExecutePay(host string, params map[string]string) (*Response, error) {
+func (client *HuPiClient) Execute(host string, params map[string]string) (*Response, error) {
 	data := url.Values{}
 	simple := strconv.FormatInt(time.Now().Unix(), 10)
 	params["appid"] = *client.appId
@@ -52,6 +66,7 @@ func (client *HuPiClient) ExecutePay(host string, params map[string]string) (*Re
 	}
 	defer resp.Body.Close()
 	all, err := io.ReadAll(resp.Body)
+	fmt.Println("HuPiClient Execute resp:" + string(all))
 	if err != nil {
 		return nil, err
 	}
@@ -62,28 +77,6 @@ func (client *HuPiClient) ExecutePay(host string, params map[string]string) (*Re
 	}
 
 	return &response, err
-}
-
-func (client *HuPiClient) ExecuteQuery(host string, params map[string]string) (string, error) {
-	data := url.Values{}
-	simple := strconv.FormatInt(time.Now().Unix(), 10)
-	params["appid"] = *client.appId
-	params["time"] = simple
-	params["nonce_str"] = simple
-	for k, v := range params {
-		data.Add(k, v)
-	}
-	data.Add("hash", client.Sign(params))
-	resp, err := http.PostForm(host, data)
-	if err != nil {
-		return "error", err
-	}
-	defer resp.Body.Close()
-	all, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return "error", err
-	}
-	return string(all), err
 }
 
 // Sign 签名方法
